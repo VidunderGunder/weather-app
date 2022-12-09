@@ -33,7 +33,9 @@ pnpm i
 
 > Keep going while the dependencies install
 
-Create an [OpenWeatherMap account](https://home.openweathermap.org/users/sign_up) and get an API key
+[Create an OpenWeatherMap account](https://home.openweathermap.org/users/sign_up) and get an API key
+
+[Provision a PostgreSQL database with Railway](https://railway.app/new) and get the database URL
 
 In the project root, create a `.env` file with the following, and replace all `...`'s with your corresponding API keys:
 
@@ -52,7 +54,7 @@ pnpm dev
 
 [Clerk](https://clerk.dev) handles authentication.
 
-To enable, [create a Clerk application](https://dashboard.clerk.dev/apps/new) and set the Clerk API keys in the `.env` file:
+To enable, [create a Clerk account](https://dashboard.clerk.dev/sign-up), [add a Clerk application](https://dashboard.clerk.dev/apps/new) and set the Clerk API keys in the `.env` file:
 
 ```env
 CLERK_BACKEND_API=...
