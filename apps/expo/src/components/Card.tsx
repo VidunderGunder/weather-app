@@ -1,22 +1,22 @@
-import { forwardRef } from "react";
-import { View } from "react-native";
-import { ViewProps } from "react-native/types";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { MotiView } from "moti";
+import classNames from "classnames";
 
 type Props = {
   // Custom props here
-} & ViewProps;
+} & ComponentPropsWithoutRef<typeof MotiView>;
 
-export default forwardRef<View, Props>(function Card(
-  { children, ...props },
+export default forwardRef<typeof MotiView, Props>(function Card(
+  { children, className, ...props },
   ref,
 ) {
   return (
-    <View
+    <MotiView
       ref={ref}
       {...props}
-      className="rounded-lg border-2 border-gray-500 p-4"
+      className={classNames("rounded-lg bg-white bg-opacity-10 p-4", className)}
     >
       {children}
-    </View>
+    </MotiView>
   );
 });

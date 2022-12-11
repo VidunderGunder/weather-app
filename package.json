@@ -1,9 +1,9 @@
 {
   "name": "create-t3-turbo",
   "private": true,
-  "packageManager": "pnpm@7.13.0",
+  "packageManager": "pnpm@7.18.1",
   "engines": {
-    "node": ">=18.0.0 <19.0.0 || >=16.0.0 <17.0.0",
+    "node": ">=18.0.0 <19.0.0",
     "yarn": "please-use-pnpm",
     "npm": "please-use-pnpm"
   },

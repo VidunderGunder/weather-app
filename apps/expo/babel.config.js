@@ -8,12 +8,14 @@ module.exports = function (api) {
         {
           moduleName: "@env",
           path: "../../.env",
-          allowlist: ["OPENWEATHER_API_KEY", "CLERK_FRONTEND_API"],
+          allowlist: ["OPEN_WEATHER_MAP_API_KEY", "CLERK_FRONTEND_API"],
           safe: false,
           allowUndefined: true,
         },
       ],
+      "@babel/plugin-proposal-export-namespace-from",
+      "react-native-reanimated/plugin",
     ],
-    presets: ["babel-preset-expo", "@babel/preset-typescript"],
+    presets: ["babel-preset-expo"],
   };
 };
