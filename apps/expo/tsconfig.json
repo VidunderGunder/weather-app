@@ -4,10 +4,5 @@
     "strict": true,
     "jsx": "react-native"
   },
-  "include": [
-    "src",
-    "index.ts",
-    "app.config.ts",
-    "../../packages/shared/src/open-weather-map.ts"
-  ]
+  "include": ["src", "*/.ts", "app"]
 }
