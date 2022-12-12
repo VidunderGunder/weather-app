@@ -7,5 +7,6 @@
 
 export { Provider } from "./provider";
 export { HomeScreen } from "./features/home/screen";
+export { LocationScreen } from "./features/location/screen";
 export { Dripsy } from "./provider/dripsy";
 export { SafeArea } from "./provider/safe-area/index";

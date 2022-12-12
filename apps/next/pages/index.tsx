@@ -1,3 +1,1 @@
-import { HomeScreen } from '@acme/app'
-
-export default HomeScreen
+export { HomeScreen as default } from "@acme/app";

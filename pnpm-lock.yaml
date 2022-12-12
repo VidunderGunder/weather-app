@@ -151,6 +151,7 @@ importers:
       '@trpc/client': ^10.1.0
       '@trpc/react-query': ^10.1.0
       '@trpc/server': ^10.1.0
+      dayjs: ^1.11.7
       dripsy: ^3.8.1
       expo-linking: ^3.2.3
       moti: 0.21.0
@@ -164,6 +165,7 @@ importers:
       '@trpc/client': 10.4.3_@trpc+server@10.4.3
       '@trpc/react-query': 10.4.3_x72ucuwg27nhluiflrpycjcdya
       '@trpc/server': 10.4.3
+      dayjs: 1.11.7
       dripsy: 3.8.1_tlgbwibd2e4zwhzxhrtfh3upe4
       expo-linking: 3.2.3_expo@47.0.8
       moti: 0.21.0_o226nfpmdbcq526n4nyohoyb6a
@@ -5377,7 +5379,7 @@ packages:
       minipass-pipeline: 1.2.4
       mkdirp: 1.0.4
       p-map: 4.0.0
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 3.0.2
       ssri: 8.0.1
       tar: 6.1.13
@@ -12784,6 +12786,15 @@ packages:
   /progress/2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
+    dev: false
+
+  /promise-inflight/1.0.1:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
     dev: false
 
   /promise-inflight/1.0.1_bluebird@3.7.2:

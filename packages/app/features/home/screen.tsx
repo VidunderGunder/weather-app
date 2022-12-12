@@ -1,8 +1,11 @@
 import { FlashList } from "@shopify/flash-list";
-import { Text, View, SafeAreaView } from "dripsy";
+import { Text, View } from "dripsy";
 import WeatherCard, { isWheaterCardInput } from "../../components/WeatherCard";
 import type { WheaterInputData } from "../../components/WeatherCard";
 import useLocation from "../../hooks/useLocation";
+import MainLayout from "../../components/layouts/MainLayout";
+import { Dimensions } from "react-native";
+import { useEffect, useState } from "react";
 
 const exampleLocations: WheaterInputData[] = [
   { cityName: "Oslo" },
@@ -14,6 +17,23 @@ const exampleLocations: WheaterInputData[] = [
 ];
 
 export const HomeScreen = () => {
+  const [width, setWidth] = useState(Dimensions.get("window").width);
+  useEffect(() => {
+    const onResize = (event: { window: { width: number; height: number } }) => {
+      setWidth(event.window.width);
+    };
+    Dimensions.addEventListener("change", onResize);
+    return () => {
+      // Not sure if this is needed, but I don't want to risk it or spend time troubleshooting atm
+      // @ts-ignore-next-line
+      Dimensions.removeEventListener?.("change", onResize);
+    };
+  }, []);
+
+  const colsBreakpoint = Array.from({ length: 10 }, (_, i) => (i + 1) * 500);
+  let numColumns = colsBreakpoint.findIndex((col) => col > width) + 1;
+  numColumns = numColumns === 0 ? colsBreakpoint.length : numColumns;
+
   const { location } = useLocation();
 
   const formattedLocation: Partial<WheaterInputData> = {
@@ -27,49 +47,43 @@ export const HomeScreen = () => {
     : exampleLocations;
 
   return (
-    <SafeAreaView
-      sx={{
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2e026d",
-      }}
-    >
-      <View
+    <MainLayout>
+      <Text
         sx={{
-          height: "100%",
-          width: "100%",
-          padding: 2,
+          color: "white",
+          fontSize: 42,
+          fontWeight: "bold",
+          textAlign: "center",
+          paddingTop: 3,
+          paddingBottom: 4,
         }}
       >
+        Weather{" "}
         <Text
           sx={{
-            color: "white",
-            // fontSize: 5,
-            fontWeight: "bold",
-            textAlign: "center",
-            paddingTop: 1,
-            paddingBottom: 4,
+            color: "$primary",
           }}
         >
-          Weather{" "}
-          <Text
+          App
+        </Text>{" "}
+        🌤
+      </Text>
+      <FlashList
+        ItemSeparatorComponent={() => <View sx={{ height: 8 }} />}
+        data={locations}
+        numColumns={numColumns}
+        renderItem={({ item }) => (
+          <View
             sx={{
-              color: "#cc66ff",
+              width: `100%`,
+              paddingRight: 2,
             }}
           >
-            App
-          </Text>{" "}
-          🌤
-        </Text>
-        <FlashList
-          data={locations}
-          numColumns={1}
-          renderItem={({ item }) => (
-            <WeatherCard {...item} sx={{ margin: 1 }} />
-          )}
-          estimatedItemSize={50}
-        />
-      </View>
-    </SafeAreaView>
+            <WeatherCard {...item} />
+          </View>
+        )}
+        estimatedItemSize={10}
+      />
+    </MainLayout>
   );
 };

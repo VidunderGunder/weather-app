@@ -1,54 +1,66 @@
 import { z } from "zod";
 
-export const Language = z.enum([
-  "af",
-  "al",
-  "ar",
-  "az",
-  "bg",
-  "ca",
-  "cz",
-  "da",
-  "de",
-  "el",
-  "en",
-  "eu",
-  "fa",
-  "fi",
-  "fr",
-  "gl",
-  "he",
-  "hi",
-  "hr",
-  "hu",
-  "id",
-  "it",
-  "ja",
-  "kr",
-  "la",
-  "lt",
-  "mk",
-  "no",
-  "nl",
-  "pl",
-  "pt",
-  "pt_br",
-  "ro",
-  "ru",
-  "sv",
-  "sk",
-  "sl",
-  "sp",
-  "sr",
-  "th",
-  "tr",
-  "ua",
-  "vi",
-  "zh_cn",
-  "zh_tw",
-  "zu",
-]);
-export type Language = z.infer<typeof Language>;
+export type FetchCurrentWeatherProps = {
+  apiKey?: string;
+  language?: Language;
+  units?: Units;
+  cityName?: string;
+  latitude?: number;
+  longitude?: number;
+};
+
+export async function fetchCurrentWeather({
+  latitude,
+  longitude,
+  /**
+   * latitude and longitude will override cityName
+   */
+  cityName,
+  language = "en",
+  units = "metric",
+  apiKey = process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_API_KEY ?? "",
+}: FetchCurrentWeatherProps): Promise<Weather> {
+  try {
+    const url = new URL("https://api.openweathermap.org/data/2.5/weather");
+    url.searchParams.append("appid", apiKey);
+    if (typeof latitude === "number" && typeof longitude === "number") {
+      // do nothing <3
+    } else if (typeof cityName === "string") {
+      try {
+        const geocode = await fetchCoordinatesByLocationName({
+          name: cityName,
+          apiKey,
+        });
+        if (
+          geocode === undefined ||
+          geocode[0] === undefined ||
+          geocode[0].lat === undefined ||
+          geocode[0].lon === undefined
+        )
+          throw new Error("No coordinates found");
+        latitude = geocode[0].lat;
+        longitude = geocode[0].lon;
+      } catch (error) {
+        throw new Error("Could not find coordinates for city name");
+      }
+    } else {
+      throw new Error("Either latitude and longitude or cityName must be set");
+    }
+    url.searchParams.append("lat", latitude.toString());
+    url.searchParams.append("lon", longitude.toString());
+    url.searchParams.append("lang", language);
+    url.searchParams.append("units", units);
+    const response = await fetch(url.toString().replace("/?", "?"));
+    const data = await response.json();
+    const dataSatisfiesSchema = Weather.safeParse(data);
+    if (!dataSatisfiesSchema.success)
+      console.warn("Weather data does not satisfy schema", data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 
 export const Units = z.enum(["standard", "metric", "imperial"]);
 export type Units = z.infer<typeof Units>;
@@ -111,70 +123,6 @@ export const Weather = z
   .deepPartial();
 export type Weather = z.infer<typeof Weather>;
 
-export async function fetchCurrentWeather({
-  apiKey,
-  latitude,
-  longitude,
-  cityName,
-  language = "en",
-  units = "metric",
-}: {
-  apiKey: string;
-  language?: Language;
-  units?: Units;
-} & (
-  | {
-      latitude?: undefined;
-      longitude?: undefined;
-      cityName: string;
-    }
-  | {
-      latitude: number;
-      longitude: number;
-      cityName?: undefined;
-    }
-)): Promise<Weather> {
-  try {
-    const url = new URL("https://api.openweathermap.org/data/2.5/weather");
-    url.searchParams.append("appid", apiKey);
-    if (typeof latitude === "number" && typeof longitude === "number") {
-    } else if (typeof cityName === "string") {
-      try {
-        const geocode = await fetchCoordinatesByLocationName({
-          name: cityName,
-          apiKey,
-        });
-        if (
-          geocode === undefined ||
-          geocode[0] === undefined ||
-          geocode[0].lat === undefined ||
-          geocode[0].lon === undefined
-        )
-          throw new Error("No coordinates found");
-        latitude = geocode[0].lat;
-        longitude = geocode[0].lon;
-      } catch (error) {
-        throw new Error("Could not find coordinates for city name");
-      }
-    } else {
-      throw new Error("Either latitude and longitude or cityName must be set");
-    }
-    url.searchParams.append("lat", latitude.toString());
-    url.searchParams.append("lon", longitude.toString());
-    url.searchParams.append("lang", language);
-    url.searchParams.append("units", units);
-    const response = await fetch(url.toString().replace("/?", "?"));
-    const data = await response.json();
-    const dataSatisfiesSchema = Weather.safeParse(data);
-    if (!dataSatisfiesSchema.success)
-      console.warn("Weather data does not satisfy schema", data);
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
 export const Geocode = z
   .object({
     lat: z.number(),
@@ -219,3 +167,53 @@ export const unitSymbols: Record<Units, string> = {
   metric: "°C",
   imperial: "°F",
 };
+
+export const Language = z.enum([
+  "af",
+  "al",
+  "ar",
+  "az",
+  "bg",
+  "ca",
+  "cz",
+  "da",
+  "de",
+  "el",
+  "en",
+  "eu",
+  "fa",
+  "fi",
+  "fr",
+  "gl",
+  "he",
+  "hi",
+  "hr",
+  "hu",
+  "id",
+  "it",
+  "ja",
+  "kr",
+  "la",
+  "lt",
+  "mk",
+  "no",
+  "nl",
+  "pl",
+  "pt",
+  "pt_br",
+  "ro",
+  "ru",
+  "sv",
+  "sk",
+  "sl",
+  "sp",
+  "sr",
+  "th",
+  "tr",
+  "ua",
+  "vi",
+  "zh_cn",
+  "zh_tw",
+  "zu",
+]);
+export type Language = z.infer<typeof Language>;

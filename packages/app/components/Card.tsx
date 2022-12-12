@@ -17,7 +17,7 @@ export default forwardRef<typeof DripsyMotiView, Props>(function Card(
       ref={ref}
       sx={{
         borderRadius: 10,
-        backgroundColor: "white",
+        backgroundColor: "$white",
         overflow: "hidden",
         ...sx,
       }}

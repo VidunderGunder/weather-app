@@ -1,8 +1,7 @@
 import { forwardRef, useMemo } from "react";
 import type { ComponentPropsWithoutRef } from "react";
-import { Image, Text, View } from "dripsy";
+import { Image, styled, Text, View } from "dripsy";
 import type { View as ViewType } from "react-native";
-import { MotiPressable } from "moti/interactions";
 import Card from "./Card";
 import { useAnimationState } from "moti";
 import { z } from "zod";
@@ -11,8 +10,11 @@ import {
   Language,
   Units,
   FetchCurrentWeatherProps,
-} from "../functions/open-weather-map";
-import useWheaterQuery from "../hooks/useWheaterQuery";
+} from "@acme/shared";
+import useWeatherQuery from "../hooks/useWeatherQuery";
+import { MotiLink } from "solito/moti";
+
+const DripsyMotiLink = styled(MotiLink)();
 
 export const WheaterCardInputSchema = z
   .union([
@@ -42,7 +44,7 @@ export function isWheaterCardInput(data: unknown): data is WheaterInputData {
 export type Props = {
   title?: string;
 } & FetchCurrentWeatherProps &
-  Omit<ComponentPropsWithoutRef<typeof MotiPressable>, "children"> &
+  Omit<ComponentPropsWithoutRef<typeof MotiLink>, "children" | "href"> &
   ComponentPropsWithoutRef<typeof View>;
 
 export default forwardRef<ViewType, Props>(function WeatherCard(
@@ -58,7 +60,7 @@ export default forwardRef<ViewType, Props>(function WeatherCard(
   ref,
 ) {
   // Fetch weather data from OpenWeatherMap API
-  const { data, isLoading, isError } = useWheaterQuery({
+  const { data, isLoading, isError } = useWeatherQuery({
     cityName,
     latitude,
     longitude,
@@ -85,17 +87,9 @@ export default forwardRef<ViewType, Props>(function WeatherCard(
     },
     to: {
       opacity: 1,
-      scale: 1.025,
-    },
-    ready: {
-      opacity: 1,
       scale: 1,
     },
   });
-
-  if (animationState.current === "to" && !isLoading && !isError) {
-    animationState.transitionTo("ready");
-  }
 
   const Loading = () => {
     return (
@@ -127,7 +121,7 @@ export default forwardRef<ViewType, Props>(function WeatherCard(
           <View>
             <Text
               sx={{
-                color: "#cc66ff",
+                color: "$primary",
                 fontSize: 24,
                 fontWeight: "600",
               }}
@@ -174,7 +168,7 @@ export default forwardRef<ViewType, Props>(function WeatherCard(
               sx={{
                 marginTop: -10,
                 marginBottom: -15,
-                marginRight: -7,
+                marginRight: -2,
                 width: 48,
                 height: 48,
               }}
@@ -186,8 +180,9 @@ export default forwardRef<ViewType, Props>(function WeatherCard(
   };
 
   return (
-    <MotiPressable
+    <DripsyMotiLink
       ref={ref}
+      href={`/${cityName ?? [latitude, longitude].join(",")}`}
       onPress={handleOpenWeatherDetails}
       transition={{
         type: "timing",
@@ -206,15 +201,19 @@ export default forwardRef<ViewType, Props>(function WeatherCard(
         [],
       )}
       {...props}
+      sx={{
+        width: "100%",
+      }}
     >
       <Card
         sx={{
-          backgroundColor: "#3e2e8569",
+          backgroundColor: "rgba(255, 255, 255, 0.05)",
+          padding: 3,
         }}
         state={animationState}
       >
         {isLoading ? <Loading /> : isError ? <Error /> : <Success />}
       </Card>
-    </MotiPressable>
+    </DripsyMotiLink>
   );
 });

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function useLocation() {
   const [location, setLocation] = useState<LocationObject>();
-  const [error, setError] = useState<string>();
+  const [isError, setError] = useState<string>();
 
   useEffect(() => {
     (async () => {
@@ -22,7 +22,7 @@ export default function useLocation() {
     })();
   }, []);
 
-  const isLoading = !location && !error;
+  const isLoading = !location && !isError;
 
-  return { location, error, isLoading };
+  return { location, isError, isLoading };
 }

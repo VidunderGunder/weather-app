@@ -5,7 +5,7 @@ import {
   Weather,
 } from "./open-weather-map";
 
-const apiKey = process.env.OPEN_WEATHER_MAP_API_KEY ?? "";
+const apiKey = process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_API_KEY ?? "";
 
 describe("apiKey", () => {
   it("is defined", () => {
