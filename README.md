@@ -37,11 +37,11 @@ pnpm i
 
 [Provision a PostgreSQL database with Railway](https://railway.app/new) and get the database URL
 
-In the project root, create a `.env` file with the following, and replace all `...`'s with your corresponding API keys:
+In the project root, create a `.env.local` file with the following, and replace all `...`'s with your corresponding API keys:
 
 ```env
 DATABASE_URL=...
-OPEN_WEATHER_MAP_API_KEY=...
+NEXT_PUBLIC_OPEN_WEATHER_MAP_API_KEY=...
 ```
 
 In your VSCode terminal, start development (given that your dependencies are done installing):

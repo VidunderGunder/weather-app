@@ -41,7 +41,7 @@ export function isWheaterCardInput(data: unknown): data is WheaterInputData {
 
 export type Props = {
   title?: string;
-} & Omit<FetchCurrentWeatherProps, "apiKey"> &
+} & FetchCurrentWeatherProps &
   Omit<ComponentPropsWithoutRef<typeof MotiPressable>, "children"> &
   ComponentPropsWithoutRef<typeof View>;
 

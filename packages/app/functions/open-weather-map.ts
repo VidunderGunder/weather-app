@@ -112,7 +112,7 @@ export const Weather = z
 export type Weather = z.infer<typeof Weather>;
 
 export type FetchCurrentWeatherProps = {
-  apiKey: string;
+  apiKey?: string;
   language?: Language;
   units?: Units;
 } & (
@@ -125,15 +125,16 @@ export type FetchCurrentWeatherProps = {
       latitude: number;
       longitude: number;
       cityName?: undefined;
-    })
+    }
+);
 
 export async function fetchCurrentWeather({
-  apiKey,
   latitude,
   longitude,
   cityName,
   language = "en",
   units = "metric",
+  apiKey = process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_API_KEY ?? "",
 }: FetchCurrentWeatherProps): Promise<Weather> {
   try {
     const url = new URL("https://api.openweathermap.org/data/2.5/weather");

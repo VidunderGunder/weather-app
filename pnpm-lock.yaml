@@ -96,6 +96,8 @@ importers:
       '@acme/app': '*'
       '@expo/next-adapter': ^4.0.12
       '@types/node': 17.0.21
+      '@zeit/next-source-maps': ^0.0.3
+      dotenv: ^16.0.3
       eslint-config-next: 13.0.1
       next: 13.0.1
       next-compose-plugins: ^2.2.1
@@ -107,6 +109,8 @@ importers:
     dependencies:
       '@acme/app': link:../../packages/app
       '@expo/next-adapter': 4.0.13_yhs2fpwdxa5sriwqmjvhhjp4je
+      '@zeit/next-source-maps': 0.0.3
+      dotenv: 16.0.3
       next: 13.0.1_672uxklweod7ene3nqtsh262ca
       raf: 3.4.1
       zod: 3.19.1
@@ -4323,6 +4327,11 @@ packages:
 
   /@xtuc/long/4.2.2:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
+
+  /@zeit/next-source-maps/0.0.3:
+    resolution: {integrity: sha512-gFDf7yQI8r/fdzTKJG9cp0rhKscRJWs/uebhScj8nZINT16kPTVm23JAi5EivO5pAJmHGzT1A8dwxAhTX0liNw==}
+    deprecated: 'Next.js now has built-in support for Source Maps: https://nextjs.org/docs/advanced-features/source-maps'
+    dev: false
 
   /abort-controller/3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}

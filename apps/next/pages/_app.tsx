@@ -1,20 +1,20 @@
-import 'raf/polyfill'
+import "raf/polyfill";
 
 const fixReanimatedIssue = () => {
   // FIXME remove this once this reanimated fix gets released
   // https://github.com/software-mansion/react-native-reanimated/issues/3355
   if (process.browser) {
     // @ts-ignore
-    window._frameTimestamp = null
+    window._frameTimestamp = null;
   }
-}
+};
 
-fixReanimatedIssue()
+fixReanimatedIssue();
 
-import { Provider } from '@acme/app'
-import Head from 'next/head'
-import React from 'react'
-import type { SolitoAppProps } from 'solito'
+import { Provider } from "@acme/app";
+import Head from "next/head";
+import React from "react";
+import type { SolitoAppProps } from "solito";
 
 function MyApp({ Component, pageProps }: SolitoAppProps) {
   return (
@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
         <Component {...pageProps} />
       </Provider>
     </>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

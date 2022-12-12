@@ -1,5 +1,10 @@
 module.exports = function (api) {
   api.cache(true);
+
+  const envPath = path.resolve(__dirname, `../../`, `.env`);
+
+  require("dotenv").config({ path: envPath });
+
   return {
     plugins: [
       "nativewind/babel",
@@ -8,7 +13,10 @@ module.exports = function (api) {
         {
           moduleName: "@env",
           path: "../../.env",
-          allowlist: ["OPEN_WEATHER_MAP_API_KEY", "CLERK_FRONTEND_API"],
+          allowlist: [
+            "NEXT_PUBLIC_OPEN_WEATHER_MAP_API_KEY",
+            "NEXT_PUBLIC_CLERK_FRONTEND_API",
+          ],
           safe: false,
           allowUndefined: true,
         },
@@ -19,3 +27,5 @@ module.exports = function (api) {
     presets: ["babel-preset-expo"],
   };
 };
+
+const path = require("path");

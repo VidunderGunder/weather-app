@@ -15,13 +15,13 @@ export default forwardRef<typeof DripsyMotiView, Props>(function Card(
   return (
     <DripsyMotiView
       ref={ref}
-      {...props}
       sx={{
-        borderRadius: "lg",
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        padding: 4,
+        borderRadius: 10,
+        backgroundColor: "white",
+        overflow: "hidden",
         ...sx,
       }}
+      {...props}
     >
       {children}
     </DripsyMotiView>
