@@ -74,7 +74,7 @@ pnpm i
 
 [Provision a PostgreSQL database with Railway](https://railway.app/new) and get the database URL
 
-In the project root, create a `.env.local` file with the following, and replace all `...`'s with your corresponding API keys:
+In the project root, create a `.env` file with the following, and replace all `...`'s with your corresponding API keys:
 
 ```env
 DATABASE_URL=...
