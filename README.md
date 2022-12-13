@@ -93,7 +93,7 @@ pnpm dev
 
 This is a monorepo using [TurboRepo](https://turbo.build/repo) and [pnpm](https://pnpm.io/).
 
-As such, installing packages is a little different than you might be used to. We recommend quickly looking through the documentation of both to get a feel for how they work, if the tips below are insufficient.
+As such, installing packages is a little different than you might be used to. Skim through the documentation of both to get a feel for how they work, if the tips below are insufficient.
 
 ### Installing packages
 
