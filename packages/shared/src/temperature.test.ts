@@ -1,4 +1,4 @@
-import { celciusToFahrenheit, fahrenheitToCelcius } from "./temperature";
+import { celsiusToFahrenheit, fahrenheitToCelsius } from "./temperature";
 
 const celciusAndFahrenheitPairs = [
   [0, 32],
@@ -10,7 +10,7 @@ describe("celciusToFahrenheit", () => {
   test.each(celciusAndFahrenheitPairs)(
     "should convert %i celcius to %i fahrenheit",
     (celcius, fahrenheit) => {
-      expect(celciusToFahrenheit(celcius)).toBe(fahrenheit);
+      expect(celsiusToFahrenheit(celcius)).toBe(fahrenheit);
     },
   );
 });
@@ -19,7 +19,7 @@ describe("fahrenheitToCelcius", () => {
   test.each(celciusAndFahrenheitPairs)(
     "should convert %i fahrenheit to %i celcius",
     (celcius, fahrenheit) => {
-      expect(fahrenheitToCelcius(fahrenheit)).toBe(celcius);
+      expect(fahrenheitToCelsius(fahrenheit)).toBe(celcius);
     },
   );
 });

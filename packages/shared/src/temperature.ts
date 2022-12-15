@@ -1,7 +1,7 @@
-export function celciusToFahrenheit(celcius: number): number {
+export function celsiusToFahrenheit(celcius: number): number {
   return celcius * 1.8 + 32;
 }
 
-export function fahrenheitToCelcius(fahrenheit: number): number {
+export function fahrenheitToCelsius(fahrenheit: number): number {
   return (fahrenheit - 32) / 1.8;
 }
